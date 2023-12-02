@@ -1,0 +1,47 @@
+{% extends 'newsletter/base.html' %}
+
+{% block title %} Рассылки {% endblock%}
+{% block title_1 %} РАССЫЛКИ {% endblock %}
+{% block content%}
+
+
+
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+      <a class="btn btn-info mb-3" href="/create_mailing" role="button">Создать рассылку</a>
+
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id_mailing</th>
+      <th scope="col">start_time</th>
+      <th scope="col">end_time</th>
+      <th scope="col">period</th>
+      <th scope="col">subject_letter</th>
+      <th scope="col">body_letter</th>
+      <th scope="col">status</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for mailing in object_list %}
+        <tr>
+          <th scope="row">{{ mailing.id }}</th>
+          <td>{{ mailing.start_time }}</td>
+          <td>{{ mailing.end_time }}</td>
+          <td>{{ mailing.period }}</td>
+          <td>{{ mailing.subject_letter|slice:20 }}</td>
+          <td>{{ mailing.body_letter|slice:20 }}</td>
+          <td>{{ mailing.status }}</td>
+          <td><a class="btn btn-warning mb-3" href="{% url 'newsletter:update_mailing' mailing.pk %}" role="button">Изменить</td>
+          <td><a class="btn btn-danger mb-3" href="{% url 'newsletter:delete_mailing' mailing.pk %}" role="button">Удалить</a></td>
+
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
