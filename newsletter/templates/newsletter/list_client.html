@@ -1,0 +1,42 @@
+{% extends 'newsletter/base.html' %}
+
+{% block title %} Клиенты {% endblock%}
+  {% block title_1 %}
+    КЛИЕНТЫ
+  {% endblock %}
+{% block content%}
+
+
+
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+      <a class="btn btn-info mb-3" href="create_client" role="button">Добавить клиента</a>
+
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">client_email</th>
+      <th scope="col">client_name</th>
+      <th scope="col">client_comment</th>
+      <th scope="col">Изменение</th>
+      <th scope="col">Удаление</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for client in object_list %}
+        <tr>
+          <th scope="row">{{ client.id }}</th>
+          <td>{{ client.client_email }}</td>
+          <td>{{ client.client_name }}</td>
+          <td>{{ client.client_comment }}</td>
+          <td><a class="btn btn-warning mb-3" href="{% url 'newsletter:update_client' client.pk %}" role="button">Изменить</a></td>
+          <td><a class="btn btn-danger mb-3" href="{% url 'newsletter:delete_client' client.pk %}" role="button">Удалить</a></td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'newsletter/base.html' %}
+{% block title %} Удаление {% endblock%}
+  {% block title_1 %}
+    УДАЛЕНИЕ
+  {% endblock %}
+{% block content%}
+    <div class="col-12">
+        <div class="row">
+            <div class="col6">
+                <div class="card text-center">
+                    <div class="body">
+                        <form method="post">
+
+                            {% csrf_token %}
+                            <p>Хотите удалить
+                                {% if object.client_name %}
+                                    этого клиента: "{{ object.client_name }}"?
+                                {% elif object.subject_letter %}
+                                    эту рассылку: "{{ object.subject_letter }}"?
+                                {% endif %}
+                            </p>
+                            <button type="submit" class="btn btn-danger">Подтвердить</button>
+                            <a
+                                {% if object.client_name %}
+                                    href="{% url 'newsletter:list_clients' %}"
+                                {% elif object.subject_letter %}
+                                    href="{% url 'newsletter:list_mailings' %}"
+                                {% endif %}
+                            type='submit' class="btn btn-danger">Отмена</a>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
