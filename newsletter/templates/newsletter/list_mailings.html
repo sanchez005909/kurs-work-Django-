@@ -10,6 +10,7 @@
     <div class="container">
 
       <a class="btn btn-info mb-3" href="/create_mailing" role="button">Создать рассылку</a>
+      <a class="btn btn-info mb-3" href="/report_list" role="button">Просмотр отчетов</a>
 
 
     <table class="table">
@@ -21,9 +22,16 @@
       <th scope="col">period</th>
       <th scope="col">subject_letter</th>
       <th scope="col">body_letter</th>
-      <th scope="col">status</th>
-      <th scope="col">Edit</th>
-      <th scope="col">Delete</th>
+      <th scope="col">status_mailing</th>
+      {% if perms.newsletter.set_active %}
+        <th scope="col">status_mailing</th>
+      {% endif %}
+      {% if perms.newsletter.change_mailing %}
+        <th scope="col">Edit</th>
+      {% endif %}
+      {% if user.is_superuser %}
+        <th scope="col">Delete</th>
+      {% endif %}
     </tr>
   </thead>
   <tbody>
@@ -36,8 +44,19 @@
           <td>{{ mailing.subject_letter|slice:20 }}</td>
           <td>{{ mailing.body_letter|slice:20 }}</td>
           <td>{{ mailing.status }}</td>
-          <td><a class="btn btn-warning mb-3" href="{% url 'newsletter:update_mailing' mailing.pk %}" role="button">Изменить</td>
-          <td><a class="btn btn-danger mb-3" href="{% url 'newsletter:delete_mailing' mailing.pk %}" role="button">Удалить</a></td>
+          {% if perms.newsletter.set_active %}
+            <td>{% if mailing.is_active %}
+                  <a class="btn btn-danger mb-3" href="{% url 'newsletter:set_active' mailing.pk %}" role="button">Деактивировать</a></td>
+                {% else %}
+                  <a class="btn btn-success mb-3" href="{% url 'newsletter:set_active' mailing.pk %}" role="button">Активировать</a></td>
+                {% endif %}
+          {% endif %}
+          {% if perms.newsletter.change_mailing %}
+            <td><a class="btn btn-warning mb-3" href="{% url 'newsletter:update_mailing' mailing.pk %}" role="button">Изменить</td>
+          {% endif %}
+          {% if user.is_superuser %}
+            <td><a class="btn btn-danger mb-3" href="{% url 'newsletter:delete_mailing' mailing.pk %}" role="button">Удалить</a></td>
+          {% endif %}
 
         </tr>
     {% endfor %}

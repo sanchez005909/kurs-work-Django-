@@ -119,8 +119,7 @@ TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
-USE_TZ = False
-
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -147,5 +146,11 @@ EMAIL_HOST_PASSWORD = 'ngdkfadgmwunaaqi'
 EMAIL_USE_SSL = True
 
 CRONJOBS = [
-    ('*/1 * * * *', 'newsletter.start_mailing.send_newsletter')
+    ('*/1 * * * *', 'newsletter.management', ['start_mailing'])
 ]
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/users/login/'
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
