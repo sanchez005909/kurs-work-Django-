@@ -17,6 +17,7 @@ class ServiceClientForm(StyleFormMixin, forms.ModelForm):
             'client_name',
             'client_comment',
             'mailing',
+            'owner'
         )
 
 
@@ -29,6 +30,5 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
             'subject_letter',
             'body_letter',
             'period',
-
-
+            'owner'
         )

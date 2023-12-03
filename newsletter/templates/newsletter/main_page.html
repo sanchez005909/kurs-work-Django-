@@ -8,8 +8,37 @@
 
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
-      <a class="btn btn-info mb-3" href="list_clients" role="button">Список клиентов</a>
-      <a class="btn btn-info mb-3" href="list_mailings" role="button">Рассылки</a>
+      <a class="btn btn-info mb-3" href="/list_clients" role="button">Список клиентов</a>
+      <a class="btn btn-info mb-3" href="/list_mailings" role="button">Рассылки</a>
+      <a class="btn btn-info mb-3" href="/blog/blog_page" role="button">Блог</a>
+      {{object_list}}
+    </div>
+    <div class="container">
 
+      <p>Всего рассылок: {{count_mailings}}</p>
+      <p>Активных рассылок: {{count_mailings_is_active}}</p>
+      <p>Уникальных клиентов: {{count_clients}}</p>
+      {% for object in random_blog %}
 
+        <div class="col">
+          <div class="card shadow-sm">
+              <img src="/media/{{ object.image }}" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"></rect></img>
+
+            <div class="card-body mb-5">
+              <p class="card-text">{{ object|title }}</p>
+                <p class="text-center"> {{object.body}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+
+                <small class="text-body-secondary">{{ object.data_publication }}</small>
+                <small class="text-body-secondary">{{ object.count_view }} Просмотров</small>
+                <a class="btn btn-info mb-3" href="{% url 'blog:blog_detail' object.pk %}" role="button">Блог</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
 {% endblock %}
