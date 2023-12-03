@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+from users.models import User
+
 from django.core.management import BaseCommand
 
 

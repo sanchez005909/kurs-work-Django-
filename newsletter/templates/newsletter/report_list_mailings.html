@@ -1,0 +1,44 @@
+{% extends 'newsletter/base.html' %}
+
+{% block title %} Рассылки {% endblock%}
+{% block title_1 %} РАССЫЛКИ {% endblock %}
+{% block content%}
+
+
+
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+      <a class="btn btn-info mb-3" href="/list_mailings" role="button">Назад</a>
+
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id_mailinglog</th>
+      <th scope="col">id_mailing</th>
+      <th scope="col">id_client</th>
+      <th scope="col">time_last_try</th>
+      <th scope="col">status_log</th>
+      <th scope="col">massege_log</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for log in object_list %}
+        <tr>
+          <th scope="row">{{ log.id }}</th>
+          <td>{{ log.client_id }}</td>
+          <td>{{ log.mailing_id }}</td>
+          <td>{{ log.time_last_try }}</td>
+          <td>{% if log.status_log %}
+                Выполнено
+              {% else %}
+                Провалено
+              {% endif %}</td>
+          <td>{{ log.server_response }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

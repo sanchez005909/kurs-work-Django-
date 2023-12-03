@@ -10,8 +10,9 @@
 
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
-
-      <a class="btn btn-info mb-3" href="create_client" role="button">Добавить клиента</a>
+      {% if perm.newsletter.add_client%}
+        <a class="btn btn-info mb-3" href="create_client" role="button">Добавить клиента</a>
+      {% endif %}
 
 
     <table class="table">
@@ -21,8 +22,15 @@
       <th scope="col">client_email</th>
       <th scope="col">client_name</th>
       <th scope="col">client_comment</th>
-      <th scope="col">Изменение</th>
-      <th scope="col">Удаление</th>
+       {% if perms.newsletter.set_active_client %}
+        <th scope="col">status_client</th>
+      {% endif %}
+      {% if perms.newsletter.change_client %}
+        <th scope="col">Edit</th>
+      {% endif %}
+      {% if user.is_superuser %}
+        <th scope="col">Delete</th>
+      {% endif %}
     </tr>
   </thead>
   <tbody>
@@ -32,8 +40,19 @@
           <td>{{ client.client_email }}</td>
           <td>{{ client.client_name }}</td>
           <td>{{ client.client_comment }}</td>
-          <td><a class="btn btn-warning mb-3" href="{% url 'newsletter:update_client' client.pk %}" role="button">Изменить</a></td>
-          <td><a class="btn btn-danger mb-3" href="{% url 'newsletter:delete_client' client.pk %}" role="button">Удалить</a></td>
+          {% if perms.newsletter.set_active_client %}
+            <td>{% if client.is_active %}
+                  <a class="btn btn-danger mb-3" href="{% url 'newsletter:set_active_client' client.pk %}" role="button">Деактивировать</a></td>
+                {% else %}
+                  <a class="btn btn-success mb-3" href="{% url 'newsletter:set_active_client' client.pk %}" role="button">Активировать</a></td>
+                {% endif %}
+          {% endif %}
+          {% if perms.newsletter.change_client %}
+            <td><a class="btn btn-warning mb-3" href="{% url 'newsletter:update_client' client.pk %}" role="button">Изменить</td>
+          {% endif %}
+          {% if user.is_superuser %}
+            <td><a class="btn btn-danger mb-3" href="{% url 'newsletter:delete_client' client.pk %}" role="button">Удалить</a></td>
+          {% endif %}
         </tr>
     {% endfor %}
   </tbody>
