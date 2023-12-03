@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('newsletter.urls', namespace='newsletter')),
     path('users/', include('users.urls', namespace='users')),
+    path('blog/', include('blog.urls', namespace='blog'))
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
