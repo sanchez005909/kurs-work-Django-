@@ -3,6 +3,6 @@
 2) Установка зависимостей  pip install -r requirements.txt
 3) Создать базу данных с названием "newsletters"
 4) Принять миграции python3 manage.py migrate
-5) Создать суперюзера: python3 manage.py csu
+5) Загрузить данные в базу данных  python3 manage.py loaddata data.json
 6) Запуск сервера: python3 manage.py runserver
    
