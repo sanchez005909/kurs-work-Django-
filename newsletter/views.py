@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import permission_required
 from blog.models import Blog
 from newsletter.models import ServiceClient, Mailing, MailingLog
 from newsletter.forms import ServiceClientForm, MailingForm
+from newsletter.services import get_cached_model
 from newsletter.utils import change_active_object
 
 
@@ -36,6 +37,11 @@ class ServiceClientListView(LoginRequiredMixin, PermissionRequiredMixin, ListVie
     model = ServiceClient
     permission_required = 'newsletter.view_serviceclient'
     template_name = 'newsletter/list_client.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['category'] = get_cached_model(ServiceClient)
+        return context_data
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
@@ -95,6 +101,11 @@ class MailingListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Mailing
     permission_required = 'newsletter.view_mailing'
     template_name = 'newsletter/list_mailings.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['category'] = get_cached_model(Mailing)
+        return context_data
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
