@@ -6,6 +6,7 @@ from newsletter.views import (ServiceClientCreateView, ServiceClientListView, Se
                               MailingListView, MailingCreateView, ServiceClientDeleteView, MailingDeleteView,
                               MailingUpdateView, MailingLogListView, toggle_active_client, toggle_active_mailing,
                               MyTemplateView)
+from django.views.decorators.cache import cache_page
 
 app_name = NewsletterConfig.name
 
@@ -15,7 +16,7 @@ urlpatterns = [
                   path('create_client', ServiceClientCreateView.as_view(), name='create_client'),
                   path('update_client/<int:pk>/', ServiceClientUpdateView.as_view(), name='update_client'),
                   path('delete_client/<int:pk>/', ServiceClientDeleteView.as_view(), name='delete_client'),
-                  path('list_mailings', MailingListView.as_view(), name='list_mailings'),
+                  path('list_mailings', cache_page(60)(MailingListView.as_view()), name='list_mailings'),
                   path('create_mailing', MailingCreateView.as_view(), name='create_mailing'),
                   path('update_mailing/<int:pk>/', MailingUpdateView.as_view(), name='update_mailing'),
                   path('delete_mailing/<int:pk>/', MailingDeleteView.as_view(), name='delete_mailing'),
