@@ -5,4 +5,11 @@
 4) Принять миграции python3 manage.py migrate
 5) Загрузить данные в базу данных  python3 manage.py loaddata data.json
 6) Запуск сервера: python3 manage.py runserver
-   
+
+
+
+Для запуска рассылки иcпользовать команду: 
+python manage.py crontab add
+
+Для рассылки вручную:
+python manage.py start_mailing
