@@ -1,8 +1,5 @@
-import datetime
-
 from django.conf import settings
 from django.db import models
-from django.http import request
 from django.utils import timezone
 
 NULLABLE = {'blank': True, 'null': True}
@@ -12,9 +9,9 @@ class ServiceClient(models.Model):
     client_email = models.EmailField(verbose_name='email', unique=True)
     client_name = models.CharField(max_length=100, verbose_name='ФИО')
     client_comment = models.TextField(verbose_name='коментарий')
-    mailing = models.ManyToManyField('Mailing')
     is_active = models.BooleanField(default=True)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='owner')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                              verbose_name='owner')
 
     def __str__(self):
         return self.client_email
@@ -57,6 +54,7 @@ class Mailing(models.Model):
     body_letter = models.TextField(verbose_name='Текс рассылки', **NULLABLE)
     is_active = models.BooleanField(default=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='owner')
+    clients = models.ManyToManyField(ServiceClient)
 
     def __str__(self):
         return f'{self.subject_letter}'
