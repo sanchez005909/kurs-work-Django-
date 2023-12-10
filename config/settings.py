@@ -147,7 +147,7 @@ EMAIL_HOST_PASSWORD = 'ngdkfadgmwunaaqi'
 EMAIL_USE_SSL = True
 
 CRONJOBS = [
-    ('*/1 * * * *', 'newsletter.start_mailing')
+    ('*/5 * * * *', 'newsletter.cronjob_start_mailings.start_mailing')
 ]
 
 AUTH_USER_MODEL = 'users.User'

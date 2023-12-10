@@ -9,11 +9,14 @@ def start_mailing():
     mailings = Mailing.objects.all()
 
     for mailing in mailings:
+
         if mailing.is_active:
             update_statuses(mailing)
+
             if mailing.status == 'started':
-                clients = mailing.serviceclient_set.all()
+                clients = mailing.clients.all()
                 if not len(clients):
+
                     log = MailingLog.objects.create(
                         status_log=False,
                         server_response='Нет подписанных клиентов',
@@ -23,6 +26,7 @@ def start_mailing():
                 else:
 
                     for client in clients:
+
                         try:
                             send_mail(
                                     subject=mailing.subject_letter,
@@ -34,6 +38,7 @@ def start_mailing():
                             mailing.status = 'done'
                             mailing.save()
                         except SMTPException as error:
+
                             log = MailingLog.objects.create(
                                 status_log=False,
                                 server_response=f'Возникла ошибка {error}',
@@ -42,6 +47,7 @@ def start_mailing():
                             )
                             log.save()
                         else:
+
                             log = MailingLog.objects.create(
                                 status_log=True,
                                 server_response=f'Письмо отправлено',
